@@ -2,9 +2,6 @@ import random
 import sys
 import copy
 
-
-iter = 0
-
 #
 #   CongaBoard class - keeps state of board
 #
@@ -87,13 +84,13 @@ class Node ():
 #   Agent class - build game tree and make moves to win
 #
 class Agent ():
-  def __init__ (self, player):
+  def __init__ (self, player, maxDepth):
     if (player != 0 and player != 1):
       raise Exception('player must be 0 or 1')
 
     self.player = player
     self.opponent = 1 if player == 0 else 0
-    self.maxDepth = 4
+    self.maxDepth = maxDepth
 
     self.numExplored = 0
 
@@ -299,19 +296,21 @@ class Agent ():
     best = float('inf')
     bestChild = None
 
-    #only evaluate levels of the game tree that
-    #represent the moves @player can make
     player = node.player
 
     print 'player', player, 'is using best move'
     choices = []
     for child in node.children:
-      choices.append(child.heuristicVal)
-      if child.heuristicVal < best:
+      if child.heuristicVal == best:
+        choices.append(child)
+      elif child.heuristicVal < best:
+        choices = [ child ]
         best = child.heuristicVal
-        bestChild = child
-    print 'chose', best, 'from', choices
-    return bestChild
+
+    node = choices[int(len(choices)*random.random())]
+
+    print 'chose',node.heuristicVal,'from',[ c.heuristicVal for c in choices ]
+    return choices[int(len(choices)*random.random())]
 
   #build depth-first game tree
   #
@@ -327,12 +326,6 @@ class Agent ():
     ownTiles = self.getTiles(player, state)
     moves = []
 
-    global iter
-    
-    # iter+=1
-    # if iter == 2:
-    #   raise Exception('skeet')
-
     #get first move from first tile
     for tile in ownTiles:
       moves = self.getMovesFromTile(tile, player, state)
@@ -341,10 +334,6 @@ class Agent ():
       if len(moves) == 0 or self.maxDepth == depth:
         #calculate heuristic of this node
         #heuristic is # of moves your opponent can make
-        opponent = 1 if 0 == parent.player else 0
-
-        #print 'getting number of moves of opponent', opponent 
-
         heuristicVal = self.getNumberOfMoves(self.opponent, state)
         parent.heuristicVal = heuristicVal
 
@@ -355,7 +344,7 @@ class Agent ():
 
           #update parents
           self.updateHeuristics(parent.parent)
-        return
+        continue
 
       #explore child nodes since we aren't at a leaf node
 
@@ -373,7 +362,6 @@ class Agent ():
 
         parent.addChildren(child)
 
-        #state.draw()
         self.numExplored += 1
         #recurse using the new state
         self.buildTree(depth+1, child)
@@ -384,20 +372,24 @@ numNodes = 0
 #tests
 #
 
-def log (loser):
+def log (loser, movecount):
   winner = 1 if 0 == loser else 0
-  print 'GAME OVER. PLAYER ', winner, 'WINS.' 
+  print 'GAME OVER. PLAYER ', winner, 'WINS.'
 
-#start as player 1
-player = Agent(0)
+  for p in range(0,2):
+    print 'player', p, ':  moved', movecount[p], 'times'
+
+#start as player 1 with maxDepth of 3
+player = Agent(0, 3)
 #opponent will play random moves as player 2
-opponent = Agent(1)
+opponent = Agent(1, 0)
 #setup new Conga board
 board = CongaBoard()
+
+MoveCount = [ 0, 0 ]
+
 #root state Node
 state = Node(0, board, None)
-
-
 
 #
 # Continuously make moves until 
@@ -410,42 +402,35 @@ while (True):
 
   move = player.getBestMove(state)
 
+  #end game if player cannot move
   if not move:
     #GAME OVER
     board.gameOver = True
     log(player.player)
     break
 
-  #player is still in the game
-  #apply the move
+  #@player is still in the game
+  MoveCount[player.player] += 1
+
+  #apply the move - update @board
   board = move.board
 
-  print '<< player ', player.player, '>> has moved:', board.draw()
+  print '<< player ', player.player, '>> has moved:', move.board.draw()
 
   randMove = opponent.getRandomMove(opponent.player, board)
 
   if not randMove:
     #GAME OVER
     board.gameOver = True
-    log(opponent.player)
+    log(opponent.player, MoveCount)
     break
 
   #opponent is still in the game
+  MoveCount[opponent.player] += 1
+
   #apply the move
   board = opponent.makeMove(randMove['from'], randMove['to'], opponent.player, board)
   #make a new Node for player to build its tree
   state = Node(player.player, board, None)
 
   print '<< player', opponent.player, '>> has moved:', board.draw()
-
-  # iter+=1
-  # if iter == 2:
-  #   break
-
-
-
-
-
-
-
-
