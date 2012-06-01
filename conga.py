@@ -65,8 +65,7 @@ class Node ():
     self.board = board
     self.parent = parent
     self.children = []
-    #default value of node is infinity since we want to minimize the
-    #heuristic value
+    #default value of node is Infinity
     self.heuristicVal = float('inf')
 
   #children can be a Node instance or a list of them
@@ -84,12 +83,13 @@ class Node ():
 #   Agent class - build game tree and make moves to win
 #
 class Agent ():
-  def __init__ (self, player, maxDepth):
+  def __init__ (self, player, hfunc, maxDepth):
     if (player != 0 and player != 1):
       raise Exception('player must be 0 or 1')
 
     self.player = player
     self.opponent = 1 if player == 0 else 0
+    self.hfunc = hfunc
     self.maxDepth = maxDepth
 
     self.numExplored = 0
@@ -143,8 +143,6 @@ class Agent ():
 
     num = 0
     own = self.getTiles(player, board)
-
-    #print 'getting number of moves player', player, 'can play'
 
     #increment num for each move
     for tile in own:
@@ -312,6 +310,16 @@ class Agent ():
     print 'chose',node.heuristicVal,'from',[ c.heuristicVal for c in choices ]
     return choices[int(len(choices)*random.random())]
 
+  def getHeuristicValue (self, hfunc, player, opponent, state):
+    if hfunc == 0:
+      #number of moves opponent can make
+      return self.getNumberOfMoves(opponent, state)
+    elif hfunc == 1:
+      #sum(# of moves player can make) - sum(# of moves opponent can make)
+      return self.getNumberOfMoves(player, state) - self.getNumberOfMoves(opponent, state)
+    else:
+      raise Exception('hfunc value '+hfunc+' not supported.')
+
   #build depth-first game tree
   #
   # this game tree is a strategic one for your Agent, scoring each node
@@ -334,7 +342,7 @@ class Agent ():
       if len(moves) == 0 or self.maxDepth == depth:
         #calculate heuristic of this node
         #heuristic is # of moves your opponent can make
-        heuristicVal = self.getNumberOfMoves(self.opponent, state)
+        heuristicVal = self.getHeuristicValue(self.hfunc, self.player, self.opponent, state)
         parent.heuristicVal = heuristicVal
 
         #if number of moves opponent can make is less here, then
@@ -380,9 +388,9 @@ def log (loser, movecount):
     print 'player', p, ':  moved', movecount[p], 'times'
 
 #start as player 1 with maxDepth of 3
-player = Agent(0, 3)
+player = Agent(0, 0, 3)
 #opponent will play random moves as player 2
-opponent = Agent(1, 0)
+opponent = Agent(1, 0, 0)
 #setup new Conga board
 board = CongaBoard()
 
