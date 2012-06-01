@@ -37,7 +37,6 @@ class CongaBoard ():
 
     for x in keys:
       sys.stdout.write('\n')
-
       for y in reversed:
         #determine color to print with
         occupant = self.territory[x][y]
@@ -49,5 +48,12 @@ class CongaBoard ():
         else:
           color = '\033[93m'  #yellow (unoccupied)
 
-        sys.stdout.write('|' + color + str(self.amount[x][y]) + '\033[0m' + '|')
+        amt = str(self.amount[x][y])
+
+        if len(amt) == 1:
+          amt = ' ' + amt
+
+        sys.stdout.write('|' + color + amt + '\033[0m' + '|')
+
+
     sys.stdout.write('\n\n')
