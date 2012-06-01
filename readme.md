@@ -42,6 +42,46 @@ This decides the score that is assigned to each board state, which decides the m
 the maximum depth in the game tree that the Agent should explore and evaluate the score of.
 I have found that a `maxDepth` of `3` provides the best performance and wins against the opponent in few moves.
 
+###`.buildTree()`
+
+builds the game tree for the Agent, scoring each node according to the heuristic function as it explores the children states of the game.
+Call this function before making a move.
+
+###`.getBestMove(state)`
+
+given a game state, gets the next best state for the Agent, based on its game tree.
+
+###`.getRandomMove(player, board)`
+
+returns a random move for `player` to make on `board`.
+
+params:
+
+* `player`: `0` for Player 1 of `1` for Player 2
+* `board`: **CongaBoard** instance
+
+The output looks like this:
+```python
+  randMove = opponent.getRandomMove(opponent.player, board)
+  #{'to': [4, 2], 'from': [4, 1]}
+```
+
+###`.makeMove(fromTile, toTile, player, board)`
+
+returns the new board state after the move is made.
+
+params:
+
+* `fromTile`: [x,y] of tile
+* `toTile`: [x,y] of first tile in direction of move
+* `player`: `0` or `1`
+* `board`: **CongaBoard** instance
+
+usage:
+```python
+  board = player.makeMove([1,4], [4,1], 0, board)
+```
+
 -------
 
 #`CongaBoard`
@@ -56,9 +96,29 @@ class representing a Conga game board.
     board = CongaBoard()
   ```
 
+###`.territory`
+
+Dict used for [ row, column ] lookups on the occupant of a tile on the board.
+
+```python
+  print 'territories:', board.territory
+
+  print 'occupant of [4,1]', board.territory[4][1]
+```
+
+###`.amount`
+
+Dict used for [ row, column ] lookups on the amount of pieces on a tile on the board.
+
+```python
+print 'amounts:', board.amount
+
+print 'amount in [1,4]:', board.amount[1][4]
+```
+
 ###`.draw()`
 
-draws the Conga Board in the terminal.
+draws the Conga Board in the terminal. Each tile is colored:
 
 * `blue` for Player 1
 * `red` for Player 2
