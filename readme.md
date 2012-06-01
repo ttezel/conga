@@ -2,10 +2,7 @@
 
 #An AI that plays Conga
 
-Here's a screenshot as it plays against an Agent that makes random moves:
-
-* Player 0 is Agent
-* Player 1 is Agent that plays random moves
+Here's a screenshot as it plays against an Agent that makes random moves (player 0 is playing competively, and player 1 is playing random moves):
 
 ![board](http://dl.dropbox.com/u/32773572/conga-bottom0.png)
 
@@ -13,7 +10,7 @@ Here's a screenshot as it plays against an Agent that makes random moves:
 
 #`Agent`
 
-class representing an agent that plays Conga.
+class representing an Artifically Intelligent agent that plays Conga.
 
 ##`Agent` API
 
@@ -35,23 +32,23 @@ params:
 Supported `hfunc` values are:
 
 * `0`: makes move that minimizes number of moves opponent will be able to make
-* `1`: makes move that maximizes the number of moves player will be able to make over opponent
+* `1`: makes move that maximizes the number of moves `Agent` will be able to make over opponent
 
-This decides the score that is assigned to each board state, which decides the moves that the Agent makes.
+This decides the score that is assigned to each board state, which decides the moves that the `Agent` makes.
 
 ####`maxDepth`
 
-the maximum depth in the game tree that the Agent should explore and evaluate the score of.
+the maximum depth in the game tree that the `Agent` should explore and evaluate the score of.
 I have found that a `maxDepth` of `3` provides the best performance and wins against the opponent in few moves.
 
 ###`.buildTree()`
 
-builds the game tree for the Agent, scoring each node according to the heuristic function as it explores the children states of the game.
+builds the game tree for the `Agent`, scoring each node according to the heuristic function as it explores the children states of the game.
 Call this function before making a move.
 
 ###`.getBestMove(state)`
 
-given a game state, gets the next best state for the Agent, based on its game tree.
+given a game state, gets the next best state for the `Agent`, based on its game tree.
 
 ###`.getRandomMove(player, board)`
 
@@ -64,7 +61,7 @@ params:
 
 The output looks like this:
 ```python
-  randMove = opponent.getRandomMove(opponent.player, board)
+  randMove = agent.getRandomMove(opponent.player, board)
   #{'to': [4, 2], 'from': [4, 1]}
 ```
 
@@ -81,7 +78,7 @@ params:
 
 usage:
 ```python
-  board = player.makeMove([1,4], [4,1], 0, board)
+  board = agent.makeMove([1,4], [4,1], 0, board)
 ```
 
 -------
