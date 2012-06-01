@@ -17,7 +17,9 @@ class representing an agent that plays Conga.
 
 ##`Agent` API
 
-Creating an instance of `Agent`:
+###Agent(`player`, `hfunc`, `maxDepth`)
+
+Create an instance of `Agent`.
 
 ```python
   agent = Agent(0, 0, 3)
