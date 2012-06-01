@@ -9,26 +9,26 @@ Here's a screenshot as it plays against an Agent that makes random moves:
 
 ![board](http://dl.dropbox.com/u/32773572/conga-bottom0.png)
 
-The AI is created with the following keys:
-  * `player`
-  * `hfunc`
-  * `maxDepth`
+----------
 
-`player`
+#`Agent`
 
-* `0` for Player 1
-* `1` for Player 2
+class representing an agent that plays Conga.
 
 ##`Agent` API
 
 Creating an instance of `Agent`:
 
 ```python
-  #instance playing as Player 1, using heuristic function 0 and maxDepth of 3
   agent = Agent(0, 0, 3)
 ```
 
-`hfunc`
+params:
+
+####`player`
+`0` for Player 1 or `1` for Player 2
+
+####`hfunc`
 
 Supported `hfunc` values are:
 
@@ -37,7 +37,7 @@ Supported `hfunc` values are:
 
 This decides the score that is assigned to each board state, which decides the moves that the Agent makes.
 
-`maxDepth`
+####`maxDepth`
 
 the maximum depth in the game tree that the Agent should explore and evaluate the score of.
 I have found that a `maxDepth` of `3` provides the best performance and wins against the opponent in few moves.
@@ -88,7 +88,7 @@ usage:
 
 class representing a Conga game board.
 
-##`Conga` API
+##`CongaBoard` API
   
   creating a new game board (initialized at default state):
 
@@ -118,13 +118,9 @@ print 'amount in [1,4]:', board.amount[1][4]
 
 ###`.draw()`
 
-draws the Conga Board in the terminal. Each tile is colored:
+draws the Conga Board in the terminal. Each tile is colored as such: `blue` for Player 1, `red` for Player 2, and `yellow` for unnocupied tiles.
 
-* `blue` for Player 1
-* `red` for Player 2
-* `yellow` for unnocupied tiles
-
-Each tile is marked with the # of pieces the player has on that tile
+Each tile is marked with the # of pieces on that tile.
 
 ## License 
 
