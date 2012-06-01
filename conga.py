@@ -137,10 +137,6 @@ class Agent ():
 
   #get # of moves @player can make on @board
   def getNumberOfMoves (self, player, board):
-    #testing
-    if 1 != player:
-      raise Exception('agent should be checking player 1 not '+str(player))
-
     num = 0
     own = self.getTiles(player, board)
 
@@ -310,13 +306,17 @@ class Agent ():
     print 'chose',node.heuristicVal,'from',[ c.heuristicVal for c in choices ]
     return choices[int(len(choices)*random.random())]
 
+  #
+  #get heurstic value of @state for player
+  #heuristic functions are defined such that their value is to be minimized
+  #
   def getHeuristicValue (self, hfunc, player, opponent, state):
     if hfunc == 0:
       #number of moves opponent can make
       return self.getNumberOfMoves(opponent, state)
     elif hfunc == 1:
-      #sum(# of moves player can make) - sum(# of moves opponent can make)
-      return self.getNumberOfMoves(player, state) - self.getNumberOfMoves(opponent, state)
+      #sum(# of moves opponent can make) - sum(# of moves player can make)
+      return (self.getNumberOfMoves(opponent, state) - self.getNumberOfMoves(player, state))
     else:
       raise Exception('hfunc value '+hfunc+' not supported.')
 
