@@ -1,84 +1,10 @@
-import random
-import sys
 import copy
+import random
 
-#
-#   CongaBoard class - keeps state of board
-#
-class CongaBoard ():
-  def __init__ (self):
-    self.territory = {}
-    self.amount = {}
-
-    self.gameOver = False
-
-    #initialize empty board
-    for row in range (1,5):
-      self.territory[row] = {}
-      self.amount[row] = {}
-      for col in range (1,5):
-        self.territory[row][col] = -1
-        self.amount[row][col] = 0
-
-    #starting state
-
-    #player 1 occupies 1,4 with 10 pieces
-    self.territory[1][4] = 0
-    self.amount[1][4] = 10
-
-    #player 2 occupies 4,1 with 10 pieces
-    self.territory[4][1] = 1
-    self.amount[4][1] = 10
-
-  def draw (self):
-    keys = self.amount.keys()
-
-    reversed = copy.deepcopy(keys)
-    reversed.reverse()
-
-    for x in keys:
-      sys.stdout.write('\n')
-
-      for y in reversed:
-        #determine color to print with
-        occupant = self.territory[x][y]
-
-        if occupant == 0:
-          color = '\033[94m'  #blue
-        elif occupant == 1:   
-          color = '\033[91m'  #red
-        else:
-          color = '\033[93m'  #yellow (unoccupied)
-
-        sys.stdout.write('|' + color + str(self.amount[x][y]) + '\033[0m' + '|')
-    sys.stdout.write('\n\n')
+#own modules
+import congaboard
+import node
       
-#
-#   Node class - for nodes in the game tree
-#
-class Node ():
-  def __init__ (self, player, board, parent):
-    if not isinstance(parent, Node) and not None == parent:
-      raise Exception('parent must be a Node instance or `None`')
-
-    self.player = player
-    self.board = board
-    self.parent = parent
-    self.children = []
-    #default value of node is Infinity
-    self.heuristicVal = float('inf')
-
-  #children can be a Node instance or a list of them
-  def addChildren (self, children):
-    if isinstance(children, list):
-      for child in children:
-        self.addChildren(child)
-      return self
-    if not isinstance(children, Node):
-      raise Exception('argument must be a Node instance or a list of them')
-    self.children.append(children)
-    return self
-
 #
 #   Agent class - build game tree and make moves to win
 #
@@ -366,7 +292,7 @@ class Agent ():
         opponent = 1 if 0 == player else 0
 
         #generate the child Node state
-        child = Node(opponent, nextState, parent)
+        child = node.Node(opponent, nextState, parent)
 
         parent.addChildren(child)
 
@@ -375,70 +301,3 @@ class Agent ():
         self.buildTree(depth+1, child)
 
 numNodes = 0
-      
-#
-#tests
-#
-
-def log (loser, movecount):
-  winner = 1 if 0 == loser else 0
-  print 'GAME OVER. PLAYER ', winner, 'WINS.'
-
-  for p in range(0,2):
-    print 'player', p, ':  moved', movecount[p], 'times'
-
-#start as player 1 with maxDepth of 3
-player = Agent(0, 0, 3)
-#opponent will play random moves as player 2
-opponent = Agent(1, 0, 0)
-#setup new Conga board
-board = CongaBoard()
-
-MoveCount = [ 0, 0 ]
-
-#root state Node
-state = Node(0, board, None)
-
-#
-# Continuously make moves until 
-# one of the Agents can't move
-#
-while (True):
-
-  #kick off recursion with depth initialized as 0
-  player.buildTree(0, state)
-
-  move = player.getBestMove(state)
-
-  #end game if player cannot move
-  if not move:
-    #GAME OVER
-    board.gameOver = True
-    log(player.player)
-    break
-
-  #@player is still in the game
-  MoveCount[player.player] += 1
-
-  #apply the move - update @board
-  board = move.board
-
-  print '<< player ', player.player, '>> has moved:', move.board.draw()
-
-  randMove = opponent.getRandomMove(opponent.player, board)
-
-  if not randMove:
-    #GAME OVER
-    board.gameOver = True
-    log(opponent.player, MoveCount)
-    break
-
-  #opponent is still in the game
-  MoveCount[opponent.player] += 1
-
-  #apply the move
-  board = opponent.makeMove(randMove['from'], randMove['to'], opponent.player, board)
-  #make a new Node for player to build its tree
-  state = Node(player.player, board, None)
-
-  print '<< player', opponent.player, '>> has moved:', board.draw()
