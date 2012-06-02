@@ -22,8 +22,12 @@ board = congaboard.CongaBoard()
 
 MoveCount = [ 0, 0 ]
 
+
+
+
+
 #root state Node
-state = node.Node(0, board, None)
+#state = node.Node(0, board, None)
 
 #
 # Continuously make moves until 
@@ -31,10 +35,10 @@ state = node.Node(0, board, None)
 #
 while (True):
 
-  #kick off recursion with depth initialized as 0
-  player.buildTree(0, state)
-
-  move = player.getBestMove(state)
+  ######
+  #new API tests
+  player.updateBoard(board)
+  move = player.getBestMove()
 
   #end game if player cannot move
   if not move:
