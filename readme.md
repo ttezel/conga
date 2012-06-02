@@ -40,7 +40,7 @@ The goal of the game is to block the opponent, so that they have no legal moves.
 words, all of the opponents’ stones must be trapped in squares that are all surrounded by 
 the player’s stones.
 
-Here's a screenshot of two `Agent`s playing Conga. Player `0` just won (shown in `blue`):
+Here's a screenshot of two `Agent`s playing Conga. Player `0` (**blue**) just won against Player `1` (**red**):
 
 
 ![board](http://dl.dropbox.com/u/32773572/conga-output.png)
