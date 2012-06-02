@@ -5,19 +5,19 @@
 The game of Conga was developed by Matin Franke, and published by “Das Spiel 
 Hamburg” in 1998. It is a two-player game played on a square 4X4 board, as shown below:
 
-                     _______________________________
-                    |       |       |       |       |
-                    | (1,4) | (2,4) | (3,4) | (4,4) |
-                    |_______|_______|______ |_______|
-                    |       |       |       |       |
-                    | (1,3) | (2,4) | (3,3) | (4,3) |
-                    |_______|_______|_______|_______|
-                    |       |       |       |       |
-                    | (1,2) | (2,4) | (3,2) | (4,2) |
-                    |_______|_______|_______|_______|
-                    |       |       |       |       |
-                    | (1,1) | (2,1) | (3,1) | (4,1) |
-                    |_______|_______|_______|_______|
+                         _______ _______ _______ _______
+                        |       |       |       |       |
+                        | (1,4) | (2,4) | (3,4) | (4,4) |
+                        |_______|_______|_______|_______|
+                        |       |       |       |       |
+                        | (1,3) | (2,4) | (3,3) | (4,3) |
+                        |_______|_______|_______|_______|
+                        |       |       |       |       |
+                        | (1,2) | (2,4) | (3,2) | (4,2) |
+                        |_______|_______|_______|_______|
+                        |       |       |       |       |
+                        | (1,1) | (2,1) | (3,1) | (4,1) |
+                        |_______|_______|_______|_______|
 
 
 Initially, Player 1 has ten black stones in (1,4) and Player 2 has ten white stones in (4,1). 
@@ -40,10 +40,10 @@ The goal of the game is to block the opponent, so that they have no legal moves.
 words, all of the opponents’ stones must be trapped in squares that are all surrounded by 
 the player’s stones.
 
-Here's a screenshot of two `Agent`s playing Conga. Player 0 is playing competitively, and Player 1 is playing random moves.
+Here's a screenshot of two `Agent`s playing Conga. Player 0 just won:
 
 
-![board](http://dl.dropbox.com/u/32773572/conga-bottom0.png)
+![board](http://dl.dropbox.com/u/32773572/conga-output.png)
 
 ----------
 
