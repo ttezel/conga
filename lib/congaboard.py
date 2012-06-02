@@ -35,8 +35,9 @@ class CongaBoard ():
     reversed = copy.deepcopy(keys)
     reversed.reverse()
 
+    sys.stdout.write('\n _____ _____ _____ _____\n')
     for x in keys:
-      sys.stdout.write('\n')
+      sys.stdout.write('|     |     |     |     |\n|')
       for y in reversed:
         #determine color to print with
         occupant = self.territory[x][y]
@@ -53,7 +54,10 @@ class CongaBoard ():
         if len(amt) == 1:
           amt = ' ' + amt
 
-        sys.stdout.write('|' + color + amt + '\033[0m' + '|')
+        sys.stdout.write(' ' + color + amt + '\033[0m' + '  |')
+
+      #raise Exception('hammer time')
+      sys.stdout.write('\n|_____|_____|_____|_____|\n')
 
 
     sys.stdout.write('\n\n')
