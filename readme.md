@@ -68,6 +68,8 @@ params:
 
 ####`hfunc`
 
+This specifies the heuristic function that the AI will use to decide which moves are the best.
+
 Supported `hfunc` values are:
 
 * `0`: makes move that minimizes number of moves opponent will be able to make
