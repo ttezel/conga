@@ -47,7 +47,7 @@ Here's a screenshot of two `Agent`s playing Conga. Player `0` (**blue**) just wo
 
 ----------
 
-To start a 1-player game (you versus the AI, just clone the repo and run `python 1pgame.py`)
+To start a 1-player game (you versus the AI), just clone the repo and run `python 1pgame.py`
 
 ----------
 
