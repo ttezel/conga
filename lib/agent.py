@@ -3,7 +3,10 @@ import random
 
 #own modules
 import congaboard
-import node
+#import node
+
+from node import Node
+
       
 #
 #   Agent class - build game tree and make moves to win
@@ -211,21 +214,39 @@ class Agent ():
       parentNode.heuristicVal = val
       parentNode = parentNode.parent
 
+  def updateBoard (self, board):
+    self.board = board
+
   #get child Node of @parent with lowest heuristic value
-  def getBestMove (self, node):
+  def getBestMove (self):
     best = float('inf')
     bestChild = None
 
-    player = node.player
+    #update state - it is assumed to be the Agent's turn
+    self.state = Node(self.player, self.board, None)
+
+    #build game tree
+
+    #kick off recursion with depth initialized as 0
+    self.buildTree(0, self.state)
+
+    #choose best move from game tree
+
+    player = self.player
 
     print 'player', player, 'is using best move'
     choices = []
-    for child in node.children:
+    state = self.state
+    for child in state.children:
       if child.heuristicVal == best:
         choices.append(child)
       elif child.heuristicVal < best:
         choices = [ child ]
         best = child.heuristicVal
+
+    if 0 == len(choices):
+      print 'AI has no valid moves to make'
+      return {}
 
     node = choices[int(len(choices)*random.random())]
 
@@ -292,7 +313,7 @@ class Agent ():
         opponent = 1 if 0 == player else 0
 
         #generate the child Node state
-        child = node.Node(opponent, nextState, parent)
+        child = Node(opponent, nextState, parent)
 
         parent.addChildren(child)
 
