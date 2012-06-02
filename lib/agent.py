@@ -299,5 +299,3 @@ class Agent ():
         self.numExplored += 1
         #recurse using the new state
         self.buildTree(depth+1, child)
-
-numNodes = 0
