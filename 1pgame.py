@@ -20,6 +20,7 @@ player = agent.Agent(0, 0, 0)
 
 #AI plays as player 2 with maxDepth 3
 opponent = agent.Agent(1, 0, 3)
+
 #setup new Conga board
 board = congaboard.CongaBoard()
 
@@ -44,6 +45,8 @@ while (True):
 
     try:
       board = player.makeMove(fromTile, toTile, player.player, board)
+      #@player is still in the game
+      MoveCount[player.player] += 1
       break
     except:
       print 'NOT A VALID MOVE. Please try again with a valid move.'
@@ -51,14 +54,9 @@ while (True):
   print '<< player', player.player, '>> has moved:'
   board.draw()
 
-  #make a new game state Node for AI to build its tree
-  state = node.Node(opponent.player, board, None)
+  opponent.updateBoard(board)
 
-
-  #kick off recursion with depth initialized as 0
-  opponent.buildTree(0, state)
-
-  move = opponent.getBestMove(state)
+  move = opponent.getBestMove()
 
   #end game if player cannot move
   if not move:
