@@ -20,7 +20,8 @@ Hamburg” in 1998. It is a two-player game played on a square 4X4 board, as sho
                         |_______|_______|_______|_______|
 
 
-Initially, Player 1 has ten black stones in (1,4) and Player 2 has ten white stones in (4,1). 
+Initially, Player 1 has ten black stones in (1,4) and Player 2 has ten white stones in (4,1).
+
 The players alternate turns. On each turn, a player chooses a square with some of his 
 stones in it, and picks a direction to move them, either horizontally, vertically or 
 diagonally. The move is done by removing the stones from the square and placing one 
@@ -29,7 +30,8 @@ stones can only be moved in consecutive squares that are not occupied by the opp
 if a direction has less than three squares not occupied by the opponent in a row, then all 
 remaining stones are placed in the last empty square. If a square has no neighbouring 
 squares that are not occupied by the opponent, then the stones in that square cannot be 
-moved. 
+moved.
+
 You can move stones from a square to a (series of) neighbouring square(s), provided the 
 squares you are moving to are not occupied by the opponent. It makes no difference if the 
 squares are free or occupied by yourself. You do not need any of the squares you are 
@@ -116,7 +118,7 @@ usage:
  #opponent makes a move:
  board = opponent.makeMove([2, 3], [3, 3], opponent.player, board)
  
- #updated player's board state
+ #update player's board state
  player.updateBoard(board)
  
  #get player's best move to make this turn
