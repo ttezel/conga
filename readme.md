@@ -111,6 +111,18 @@ I have found that a `maxDepth` of `3` provides the best performance and wins aga
 
 updates the Agent's copy of the board. Make sure to call this after the opponent plays, before the next call to `.getBestMove()` or `.getRandomMove()`. `board` is a **CongaBoard** instance.
 
+usage:
+```python
+ #opponent makes a move:
+ board = opponent.makeMove([2, 3], [3, 3], opponent.player, board)
+ 
+ #updated player's board state
+ player.updateBoard(board)
+ 
+ #get player's best move to make this turn
+ move = player.getBestMove()
+```
+
 ###`.getBestMove()`
 
 returns the most competitive move for the Agent to play on the board. This is determined using the heuristic function.
