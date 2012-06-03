@@ -55,7 +55,9 @@ while (True):
 
   print '<< player ', player.player, '>> has moved:', move.board.draw()
 
-  randMove = opponent.getRandomMove(opponent.player, board)
+  opponent.updateBoard(board)
+
+  randMove = opponent.getRandomMove()
 
   if not randMove:
     #GAME OVER

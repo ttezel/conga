@@ -47,15 +47,22 @@ Here's a screenshot of two `Agent`s playing Conga. Player `0` (**blue**) just wo
 
 ----------
 
+
 To start a 1-player game (you versus the AI), just clone the repo and run `python 1pgame.py`
+
 
 ----------
 
+
 #`Agent`
+
 
 class representing an Artifically Intelligent agent that plays Conga.
 
+
 ##`Agent` API
+
+
 
 ###Agent(`player`, `hfunc`, `maxDepth`)
 
@@ -86,27 +93,39 @@ This decides the score that is assigned to each board state, which decides the m
 the maximum depth in the game tree that the `Agent` should explore and evaluate the score of.
 I have found that a `maxDepth` of `3` provides the best performance and wins against the opponent in few moves.
 
-###`.buildTree()`
 
-builds the game tree for the `Agent`, scoring each node according to the heuristic function as it explores the children states of the game.
-Call this function before making a move.
+----------
 
-###`.getBestMove(state)`
+##Methods
 
-given a game state, gets the next best state for the `Agent`, based on its game tree.
+###`.updateBoard(board)`
 
-###`.getRandomMove(player, board)`
+updates the Agent's copy of the board. Make sure to call this before the next call to `.getBestMove()` or `.getRandomMove()`. `board` is a **CongaBoard** instance.
 
-returns a random move for `player` to make on `board`.
+###`.getBestMove()`
 
-params:
+returns the most competitive game state for the Agent to be in on this turn. This is an Object that has the following keys:
 
-* `player`: `0` for Player 1 of `1` for Player 2
-* `board`: **CongaBoard** instance
+returns the most competitive move for the Agent to play on the board. This is determined using the heuristic function.
 
 The output looks like this:
 ```python
-  randMove = agent.getRandomMove(opponent.player, board)
+  bestState = agent.getBestMove()
+
+  #prints: 
+  #{'to': [2, 4], 'from': [1, 4]}
+```
+
+###`.getRandomMove()`
+
+returns a random move for the Agent to make on the board.
+
+
+The output looks like this:
+```python
+  randMove = agent.getRandomMove()
+
+  #prints: 
   #{'to': [4, 2], 'from': [4, 1]}
 ```
 

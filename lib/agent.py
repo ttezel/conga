@@ -75,13 +75,13 @@ class Agent ():
 
     return num
 
-  def getRandomMove (self, player, board):
-    print 'player', player, 'is using random move'
+  def getRandomMove (self):
+    print 'player', self.player, 'is using random move'
     pool = []
-    ownTiles = self.getTiles(player, board)
+    ownTiles = self.getTiles(self.player, self.board)
 
     for owntile in ownTiles:
-      moves = self.getMovesFromTile(owntile, player, board)
+      moves = self.getMovesFromTile(owntile, self.player, self.board)
       for move in moves:
         pool.append({ 'from': owntile, 'to': move })
 
