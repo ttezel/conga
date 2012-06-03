@@ -75,7 +75,7 @@ Create an instance of `Agent`.
 params:
 
 ####`player`
-`0` for Player 1 or `1` for Player 2
+`0` for **Player 1** or `1` for **Player 2**
 
 ####`hfunc`
 
@@ -99,11 +99,9 @@ I have found that a `maxDepth` of `3` provides the best performance and wins aga
 
 ###`.updateBoard(board)`
 
-updates the Agent's copy of the board. Make sure to call this before the next call to `.getBestMove()` or `.getRandomMove()`. `board` is a **CongaBoard** instance.
+updates the Agent's copy of the board. Make sure to call this after the opponent plays, before the next call to `.getBestMove()` or `.getRandomMove()`. `board` is a **CongaBoard** instance.
 
 ###`.getBestMove()`
-
-returns the most competitive game state for the Agent to be in on this turn. This is an Object that has the following keys:
 
 returns the most competitive move for the Agent to play on the board. This is determined using the heuristic function.
 
