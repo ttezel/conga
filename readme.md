@@ -94,7 +94,6 @@ the maximum depth in the game tree that the `Agent` should explore and evaluate 
 I have found that a `maxDepth` of `3` provides the best performance and wins against the opponent in few moves.
 
 
-----------
 
 ##Methods
 
@@ -110,7 +109,7 @@ returns the most competitive move for the Agent to play on the board. This is de
 
 The output looks like this:
 ```python
-  bestState = agent.getBestMove()
+  print agent.getBestMove()
 
   #prints: 
   #{'to': [2, 4], 'from': [1, 4]}
@@ -123,7 +122,7 @@ returns a random move for the Agent to make on the board.
 
 The output looks like this:
 ```python
-  randMove = agent.getRandomMove()
+  print agent.getRandomMove()
 
   #prints: 
   #{'to': [4, 2], 'from': [4, 1]}
@@ -142,7 +141,7 @@ params:
 
 usage:
 ```python
-  board = agent.makeMove([1,4], [4,1], 0, board)
+  board = agent.makeMove([2,3], [3,3], 0, board)
 ```
 
 -------
