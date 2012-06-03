@@ -2,11 +2,12 @@
 #   Node class - for nodes in the game tree
 #
 class Node ():
-  def __init__ (self, player, board, parent):
+  def __init__ (self, player, moveMade, board, parent):
     if not isinstance(parent, Node) and not None == parent:
       raise Exception('parent must be a Node instance or `None`')
 
     self.player = player
+    self.moveMade = moveMade  #the last move made (that produced this board state)
     self.board = board
     self.parent = parent
     self.children = []

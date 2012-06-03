@@ -32,6 +32,7 @@ MoveCount = [ 0, 0 ]
 #
 while (True):
   board.draw()
+  player.updateBoard(board)
 
   #get move from stdin
   while True:
@@ -56,10 +57,10 @@ while (True):
 
   opponent.updateBoard(board)
 
-  move = opponent.getBestMove()
+  bestMove = opponent.getBestMove()
 
   #end game if player cannot move
-  if not move:
+  if not bestMove:
     #GAME OVER
     board.gameOver = True
     log(opponent.player)
@@ -69,6 +70,6 @@ while (True):
   MoveCount[opponent.player] += 1
 
   #apply the move - update @board
-  board = move.board
+  board = opponent.makeMove(bestMove['from'], bestMove['to'], opponent.player, board)
 
   print '<< player ', opponent.player, '>> has moved:'

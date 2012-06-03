@@ -35,13 +35,11 @@ MoveCount = [ 0, 0 ]
 #
 while (True):
 
-  ######
-  #new API tests
   player.updateBoard(board)
-  move = player.getBestMove()
+  bestMove = player.getBestMove()
 
   #end game if player cannot move
-  if not move:
+  if not bestMove:
     #GAME OVER
     board.gameOver = True
     log(player.player)
@@ -51,26 +49,29 @@ while (True):
   MoveCount[player.player] += 1
 
   #apply the move - update @board
-  board = move.board
+  board = player.makeMove(bestMove['from'], bestMove['to'], player.player, board)
 
-  print '<< player ', player.player, '>> has moved:', move.board.draw()
+  print '<< player ', player.player, '>> has moved:', board.lastMoveMade
+  board.draw()
+
+  #opponent's turn
 
   opponent.updateBoard(board)
 
   randMove = opponent.getRandomMove()
 
+  #end game if opponent cannot move
   if not randMove:
     #GAME OVER
     board.gameOver = True
     log(opponent.player, MoveCount)
     break
 
-  #opponent is still in the game
+  #@opponent is still in the game
   MoveCount[opponent.player] += 1
 
   #apply the move
   board = opponent.makeMove(randMove['from'], randMove['to'], opponent.player, board)
-  #make a new Node for player to build its tree
-  state = node.Node(player.player, board, None)
 
-  print '<< player', opponent.player, '>> has moved:', board.draw()
+  print '<< player', opponent.player, '>> has moved:', board.lastMoveMade
+  board.draw()

@@ -8,6 +8,7 @@ class CongaBoard ():
   def __init__ (self):
     self.territory = {}
     self.amount = {}
+    self.lastMoveMade = None
 
     self.gameOver = False
 

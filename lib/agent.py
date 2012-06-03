@@ -107,6 +107,7 @@ class Agent ():
     #print 'player', player, 'making move from', tile, 'to', move
 
     #we can make the move
+    board.lastMoveMade = { 'from': tile, 'to': move }
 
     x0 = tile[0]
     y0 = tile[1]
@@ -223,7 +224,7 @@ class Agent ():
     bestChild = None
 
     #update state - it is assumed to be the Agent's turn
-    self.state = Node(self.player, self.board, None)
+    self.state = Node(self.player, self.board.lastMoveMade, self.board, None)
 
     #build game tree
 
@@ -251,7 +252,10 @@ class Agent ():
     node = choices[int(len(choices)*random.random())]
 
     print 'chose',node.heuristicVal,'from',[ c.heuristicVal for c in choices ]
-    return choices[int(len(choices)*random.random())]
+
+    bestState = choices[int(len(choices)*random.random())]
+
+    return bestState.moveMade
 
   #
   #get heurstic value of @state for player
@@ -309,11 +313,13 @@ class Agent ():
         #get next state of board after move
         nextState = self.makeMove(tile, move, player, board)
 
+        moveMade = { 'from': tile, 'to': move }
+
         #switch turn to opponent
         opponent = 1 if 0 == player else 0
 
         #generate the child Node state
-        child = Node(opponent, nextState, parent)
+        child = Node(opponent, moveMade, nextState, parent)
 
         parent.addChildren(child)
 
